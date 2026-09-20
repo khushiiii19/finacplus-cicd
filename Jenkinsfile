@@ -43,7 +43,6 @@ pipeline {
                 }
             }
         }
-    }
 
         stage('Kubernetes Deploy') {
             steps {
@@ -55,6 +54,7 @@ pipeline {
                 '''
             }
         }
+    }
 
     post {
         success {
