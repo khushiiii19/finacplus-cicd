@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE = 'khushiiii19/finacplus-cicd'
+    }
+
     stages {
 
         stage('Checkout') {
@@ -18,7 +22,25 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t finacplus-cicd:${BUILD_NUMBER} .'
+                sh 'docker build -t ${DOCKER_IMAGE}:${BUILD_NUMBER} .'
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DOCKER_USERNAME',
+                        passwordVariable: 'DOCKER_PASSWORD'
+                    )
+                ]) {
+                    sh '''
+                        echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+                        docker push "${DOCKER_IMAGE}:${BUILD_NUMBER}"
+                        docker logout
+                    '''
+                }
             }
         }
     }
