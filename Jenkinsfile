@@ -45,6 +45,17 @@ pipeline {
         }
     }
 
+        stage('Kubernetes Deploy') {
+            steps {
+                sh '''
+                    kubectl set image deployment/finacplus-app \
+                    finacplus-app=${DOCKER_IMAGE}:${BUILD_NUMBER}
+
+                    kubectl rollout status deployment/finacplus-app --timeout=120s
+                '''
+            }
+        }
+
     post {
         success {
             echo 'Pipeline completed successfully.'
