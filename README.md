@@ -6,6 +6,34 @@ The pipeline automatically validates application code, builds a Docker image, pu
 
 ---
 
+## 📦 Assignment Deliverables
+
+### 1. Jenkins Pipeline
+- `Jenkinsfile` contains the Groovy-based CI/CD pipeline.
+- Includes source checkout, application validation, Docker build, Docker Hub push, Kubernetes deployment, and rollout verification.
+
+### 2. Setup Documentation
+- GitHub repository and webhook configuration
+- Jenkins configuration
+- Docker Hub credential setup
+- Kubernetes cluster and deployment configuration
+
+### 3. Test Cases & Validation
+- Application code validation
+- Docker image build validation
+- Docker Hub push validation
+- Kubernetes deployment validation
+- Rollout and pod status verification
+- Application `/health` endpoint verification
+
+### 4. Monitoring & Logging Recommendations
+- Jenkins build and console logs
+- Kubernetes pod and deployment status
+- Application health checks
+- Recommended monitoring and logging practices
+
+---
+
 ## 1. Project Overview
 
 This project implements an automated CI/CD workflow for a containerized Python Flask application.
