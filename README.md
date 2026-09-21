@@ -9,7 +9,7 @@ The pipeline automatically validates application code, builds a Docker image, pu
 ## 📦 Assignment Deliverables
 
 ### 1. Jenkins Pipeline
-- `Jenkinsfile` contains the Groovy-based CI/CD pipeline.
+- `Jenkinsfile` contains the Groovy-based CI/CD pipeline with build and Kubernetes deployment stages.
 - Includes source checkout, application validation, Docker build, Docker Hub push, Kubernetes deployment, and rollout verification.
 
 ### 2. Setup Documentation
