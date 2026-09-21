@@ -81,20 +81,35 @@ pipeline {
             steps {
                 echo 'Running application validation and automated tests...'
 
+                /*
+                 * Run tests inside a clean Python Docker container.
+                 * This avoids depending on Python/pip installed
+                 * directly inside the Jenkins container.
+                 */
                 sh '''
                     set -e
 
-                    echo "Python version:"
-                    python3 --version
+                    docker run --rm \
+                        -v "$WORKSPACE:/workspace" \
+                        -w /workspace \
+                        python:3.12-slim \
+                        sh -c '
+                            set -e
 
-                    echo "Running Python syntax validation..."
-                    python3 -m py_compile app/app.py
+                            echo "Python version:"
+                            python --version
 
-                    echo "Installing test dependencies..."
-                    python3 -m pip install --user -r requirements-test.txt
+                            echo "Installing application and test dependencies..."
+                            pip install --no-cache-dir \
+                                -r app/requirements.txt \
+                                -r requirements-test.txt
 
-                    echo "Running automated tests..."
-                    python3 -m pytest tests/ -v
+                            echo "Running Python syntax validation..."
+                            python -m py_compile app/app.py
+
+                            echo "Running automated tests..."
+                            pytest tests/ -v
+                        '
                 '''
             }
         }
