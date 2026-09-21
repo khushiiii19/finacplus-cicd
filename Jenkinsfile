@@ -82,16 +82,21 @@ pipeline {
                 echo 'Running application validation and automated tests...'
 
                 /*
-                 * Run tests inside a clean Python Docker container.
-                 * This avoids depending on Python/pip installed
-                 * directly inside the Jenkins container.
+                 * Jenkins itself runs inside Docker and uses the
+                 * host Docker daemon through the Docker socket.
+                 *
+                 * The Jenkins home directory is stored in the
+                 * named Docker volume "jenkins_home".
+                 *
+                 * Mounting that same volume allows the temporary
+                 * Python container to access the Jenkins workspace.
                  */
                 sh '''
                     set -e
 
                     docker run --rm \
-                        -v "$WORKSPACE:/workspace" \
-                        -w /workspace \
+                        -v jenkins_home:/jenkins_home \
+                        -w "/jenkins_home/workspace/finacplus-cicd" \
                         python:3.12-slim \
                         sh -c '
                             set -e
@@ -160,10 +165,6 @@ pipeline {
             steps {
                 echo "Deploying ${params.IMAGE_REPO}:${BUILD_NUMBER} to Kubernetes..."
 
-                /*
-                 * Mark deployment as started before changing
-                 * the Kubernetes Deployment.
-                 */
                 script {
                     env.DEPLOYMENT_STARTED = 'true'
                 }
@@ -182,10 +183,6 @@ pipeline {
                         --timeout=120s
                 '''
 
-                /*
-                 * Only mark the deployment complete after
-                 * the rollout has successfully finished.
-                 */
                 script {
                     env.DEPLOYMENT_COMPLETED = 'true'
                 }
@@ -239,9 +236,6 @@ pipeline {
                 /*
                  * Roll back only when Kubernetes deployment
                  * actually started but did not complete.
-                 *
-                 * Test/build/push failures will not trigger
-                 * an unnecessary Kubernetes rollback.
                  */
                 if (env.DEPLOYMENT_STARTED == 'true' &&
                     env.DEPLOYMENT_COMPLETED != 'true') {
