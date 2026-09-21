@@ -51,6 +51,12 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS = 'dockerhub-creds'
+
+        IMAGE_REPO_VALUE = "${params.IMAGE_REPO}"
+        K8S_DEPLOYMENT_VALUE = "${params.K8S_DEPLOYMENT}"
+        K8S_CONTAINER_VALUE = "${params.K8S_CONTAINER}"
+        K8S_NAMESPACE_VALUE = "${params.K8S_NAMESPACE}"
+        K8S_CONTEXT_VALUE = "${params.K8S_CONTEXT}"
     }
 
     stages {
@@ -80,8 +86,9 @@ pipeline {
 
                 sh '''
                     set -e
+
                     docker build \
-                        -t "${IMAGE_REPO}:${BUILD_NUMBER}" \
+                        -t "${IMAGE_REPO_VALUE}:${BUILD_NUMBER}" \
                         .
                 '''
             }
@@ -103,7 +110,7 @@ pipeline {
                             --username "$DOCKER_USERNAME" \
                             --password-stdin
 
-                        docker push "${IMAGE_REPO}:${BUILD_NUMBER}"
+                        docker push "${IMAGE_REPO_VALUE}:${BUILD_NUMBER}"
                     '''
                 }
             }
@@ -122,14 +129,14 @@ pipeline {
                 sh '''
                     set -e
 
-                    kubectl --context="${K8S_CONTEXT}" \
-                        --namespace="${K8S_NAMESPACE}" \
-                        set image deployment/"${K8S_DEPLOYMENT}" \
-                        "${K8S_CONTAINER}"="${IMAGE_REPO}:${BUILD_NUMBER}"
+                    kubectl --context="${K8S_CONTEXT_VALUE}" \
+                        --namespace="${K8S_NAMESPACE_VALUE}" \
+                        set image deployment/"${K8S_DEPLOYMENT_VALUE}" \
+                        "${K8S_CONTAINER_VALUE}"="${IMAGE_REPO_VALUE}:${BUILD_NUMBER}"
 
-                    kubectl --context="${K8S_CONTEXT}" \
-                        --namespace="${K8S_NAMESPACE}" \
-                        rollout status deployment/"${K8S_DEPLOYMENT}" \
+                    kubectl --context="${K8S_CONTEXT_VALUE}" \
+                        --namespace="${K8S_NAMESPACE_VALUE}" \
+                        rollout status deployment/"${K8S_DEPLOYMENT_VALUE}" \
                         --timeout=120s
                 '''
             }
@@ -143,15 +150,15 @@ pipeline {
                     set -e
 
                     echo "Deployment status:"
-                    kubectl --context="${K8S_CONTEXT}" \
-                        --namespace="${K8S_NAMESPACE}" \
-                        get deployment "${K8S_DEPLOYMENT}"
+                    kubectl --context="${K8S_CONTEXT_VALUE}" \
+                        --namespace="${K8S_NAMESPACE_VALUE}" \
+                        get deployment "${K8S_DEPLOYMENT_VALUE}"
 
                     echo "Pod status:"
-                    kubectl --context="${K8S_CONTEXT}" \
-                        --namespace="${K8S_NAMESPACE}" \
+                    kubectl --context="${K8S_CONTEXT_VALUE}" \
+                        --namespace="${K8S_NAMESPACE_VALUE}" \
                         get pods \
-                        -l app="${K8S_CONTAINER}"
+                        -l app="${K8S_CONTAINER_VALUE}"
                 '''
             }
         }
