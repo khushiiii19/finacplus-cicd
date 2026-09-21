@@ -1,6 +1,6 @@
 # FinacPlus CI/CD Pipeline
 
-A CI/CD pipeline implementation using GitHub, Jenkins, Docker, Docker Hub, and Kubernetes.
+A CI/CD pipeline implementation using **GitHub, Jenkins, Docker, Docker Hub, and Kubernetes**.
 
 The pipeline automatically validates application code, runs automated application tests, builds a Docker image, pushes the image to Docker Hub, deploys the new image to Kubernetes, verifies the deployment, and attempts an automatic rollback if a Kubernetes rollout fails.
 
@@ -10,56 +10,28 @@ The pipeline automatically validates application code, runs automated applicatio
 
 ### 1. Jenkins Pipeline
 
-* `Jenkinsfile` contains the Groovy-based CI/CD pipeline with build, test, and Kubernetes deployment stages.
-* Includes source checkout, application validation, automated pytest tests, Docker build, Docker Hub push, Kubernetes deployment, rollout verification, and deployment-aware rollback.
+- `Jenkinsfile` contains the Groovy-based CI/CD pipeline with build, test, and Kubernetes deployment stages.
+- Includes source checkout, application validation, automated pytest tests, Docker build, Docker Hub push, Kubernetes deployment, rollout verification, and deployment-aware rollback.
 
 ### 2. Setup Documentation
 
-* GitHub repository and webhook configuration
-* Jenkins configuration
-* Docker Hub credential setup
-* Kubernetes cluster and deployment configuration
-
-### 3. Test Cases & Validation
-
-* Python syntax validation
-* Automated application endpoint tests using pytest
-* Docker image build validation
-* Docker Hub push validation
-* Kubernetes deployment validation
-* Rollout and pod status verification
-* Application `/` and `/health` endpoint verification
-
-### 4. Monitoring & Logging Recommendations
-
-* Jenkins build and console logs
-* Kubernetes pod and deployment status
-* Application health checks
-* Recommended monitoring and logging practices
-
----
-
-## 📦 Assignment Deliverables
-
-### 1. Jenkins Pipeline
-- `Jenkinsfile` contains the Groovy-based CI/CD pipeline with build and Kubernetes deployment stages.
-- Includes source checkout, application validation, Docker build, Docker Hub push, Kubernetes deployment, and rollout verification.
-
-### 2. Setup Documentation
 - GitHub repository and webhook configuration
 - Jenkins configuration
 - Docker Hub credential setup
 - Kubernetes cluster and deployment configuration
 
 ### 3. Test Cases & Validation
-- Application code validation
+
+- Python syntax validation
+- Automated application endpoint tests using pytest
 - Docker image build validation
 - Docker Hub push validation
 - Kubernetes deployment validation
 - Rollout and pod status verification
-- Application `/health` endpoint verification
+- Application `/` and `/health` endpoint verification
 
 ### 4. Monitoring & Logging Recommendations
+
 - Jenkins build and console logs
 - Kubernetes pod and deployment status
 - Application health checks
@@ -75,39 +47,37 @@ The pipeline is triggered whenever changes are pushed to the `main` branch of th
 
 ### Pipeline Flow
 
-```text
-Developer
-    |
-    | git push
-    v
-GitHub Repository
-    |
-    | GitHub Webhook
-    v
-Jenkins
-    |
-    +--> Checkout source code
-    |
-    +--> Run application validation
-    |
-    +--> Run automated pytest tests
-    |
-    +--> Build Docker image
-    |
-    +--> Push image to Docker Hub
-    |
-    +--> Deploy image to Kubernetes
-    |
-    +--> Verify rollout and pod status
-    |
-    +--> Roll back if Kubernetes rollout fails
-    |
-    v
-Kubernetes Cluster
-    |
-    v
-Running Application
-```
+    Developer
+        |
+        | git push
+        v
+    GitHub Repository
+        |
+        | GitHub Webhook
+        v
+    Jenkins
+        |
+        +--> Checkout source code
+        |
+        +--> Run application validation
+        |
+        +--> Run automated pytest tests
+        |
+        +--> Build Docker image
+        |
+        +--> Push image to Docker Hub
+        |
+        +--> Deploy image to Kubernetes
+        |
+        +--> Verify rollout and pod status
+        |
+        +--> Roll back if Kubernetes rollout fails
+        |
+        v
+    Kubernetes Cluster
+        |
+        v
+    Running Application
 
 ---
 
@@ -115,72 +85,70 @@ Running Application
 
 The main objectives of this project are:
 
-* Automate application builds when code is committed to Git.
-* Validate application source code before building the Docker image.
-* Run automated application tests before deployment.
-* Build and package the application as a Docker image.
-* Store the Docker image in Docker Hub.
-* Automatically deploy successful builds to Kubernetes.
-* Verify that the Kubernetes rollout completes successfully.
-* Automatically attempt a rollback when a Kubernetes deployment rollout fails.
-* Make the pipeline reusable for different applications and Kubernetes environments.
-* Handle failures clearly and prevent deployment when earlier stages fail.
-* Follow basic security practices by storing credentials in Jenkins rather than hardcoding them.
+- Automate application builds when code is committed to Git.
+- Validate application source code before building the Docker image.
+- Run automated application tests before deployment.
+- Build and package the application as a Docker image.
+- Store the Docker image in Docker Hub.
+- Automatically deploy successful builds to Kubernetes.
+- Verify that the Kubernetes rollout completes successfully.
+- Automatically attempt a rollback when a Kubernetes deployment rollout fails.
+- Make the pipeline reusable for different applications and Kubernetes environments.
+- Handle failures clearly and prevent deployment when earlier stages fail.
+- Follow basic security practices by storing credentials in Jenkins rather than hardcoding them.
 
 ---
 
 ## 3. Technology Stack
 
-| Technology     | Purpose                           |
-| -------------- | --------------------------------- |
-| GitHub         | Source code repository            |
-| Jenkins        | CI/CD automation                  |
-| Groovy         | Jenkins pipeline scripting        |
-| Python / Flask | Sample application                |
-| pytest         | Automated application testing     |
-| Docker         | Application containerization      |
-| Docker Hub     | Container image registry          |
-| Kubernetes     | Container orchestration           |
-| kubectl        | Kubernetes command-line interface |
-| GitHub Webhook | Automatic Jenkins trigger         |
+| Technology | Purpose |
+| --- | --- |
+| GitHub | Source code repository |
+| Jenkins | CI/CD automation |
+| Groovy | Jenkins pipeline scripting |
+| Python / Flask | Sample application |
+| pytest | Automated application testing |
+| Docker | Application containerization |
+| Docker Hub | Container image registry |
+| Kubernetes | Container orchestration |
+| kubectl | Kubernetes command-line interface |
+| GitHub Webhook | Automatic Jenkins trigger |
 
 ---
 
 ## 4. Repository Structure
 
-```text
-finacplus-cicd/
-│
-├── app/
-│   ├── app.py
-│   └── requirements.txt
-│
-├── tests/
-│   └── test_app.py
-│
-├── k8s/
-│   ├── deployment.yaml
-│   └── service.yaml
-│
-├── Dockerfile
-├── Jenkinsfile
-├── requirements-test.txt
-├── README.md
-└── .gitignore
-```
+    finacplus-cicd/
+    │
+    ├── app/
+    │   ├── app.py
+    │   └── requirements.txt
+    │
+    ├── tests/
+    │   └── test_app.py
+    │
+    ├── k8s/
+    │   ├── deployment.yaml
+    │   └── service.yaml
+    │
+    ├── Dockerfile
+    ├── Jenkinsfile
+    ├── requirements-test.txt
+    ├── README.md
+    └── .gitignore
 
 ### File Description
 
-* `app/app.py` - Flask application.
-* `app/requirements.txt` - Runtime Python dependencies.
-* `tests/test_app.py` - Automated pytest tests for application endpoints.
-* `requirements-test.txt` - CI/test dependencies.
-* `Dockerfile` - Instructions for building the application container.
-* `k8s/deployment.yaml` - Kubernetes Deployment configuration.
-* `k8s/service.yaml` - Kubernetes Service configuration.
-* `Jenkinsfile` - Complete CI/CD pipeline written in Groovy.
-* `README.md` - Project documentation.
-* `.gitignore` - Prevents unnecessary and sensitive local files from being committed.
+- `app/app.py` - Flask application.
+- `app/requirements.txt` - Runtime Python dependencies.
+- `tests/test_app.py` - Automated pytest tests for application endpoints.
+- `requirements-test.txt` - CI/test dependencies.
+- `Dockerfile` - Instructions for building the application container.
+- `k8s/deployment.yaml` - Kubernetes Deployment configuration.
+- `k8s/service.yaml` - Kubernetes Service configuration.
+- `Jenkinsfile` - Complete CI/CD pipeline written in Groovy.
+- `README.md` - Project documentation.
+- `.gitignore` - Prevents unnecessary and sensitive local files from being committed.
 
 ---
 
@@ -190,27 +158,19 @@ The project uses a simple Flask application with two endpoints.
 
 ### Application Endpoint
 
-```text
-/
-```
+    /
 
 Returns:
 
-```text
-FinacPlus CI/CD Pipeline is working!
-```
+    FinacPlus CI/CD Pipeline is working!
 
 ### Health Endpoint
 
-```text
-/health
-```
+    /health
 
 Returns:
 
-```text
-healthy
-```
+    healthy
 
 The `/health` endpoint is also used by Kubernetes readiness and liveness probes.
 
@@ -220,41 +180,37 @@ The `/health` endpoint is also used by Kubernetes readiness and liveness probes.
 
 The application is packaged using the following Dockerfile:
 
-```dockerfile
-FROM python:3.12-slim
+    FROM python:3.12-slim
 
-WORKDIR /app
+    WORKDIR /app
 
-COPY app/requirements.txt .
+    COPY app/requirements.txt .
 
-RUN pip install --no-cache-dir -r requirements.txt
+    RUN pip install --no-cache-dir -r requirements.txt
 
-COPY app/ .
+    COPY app/ .
 
-RUN useradd --create-home appuser
+    RUN useradd --create-home appuser
 
-USER appuser
+    USER appuser
 
-EXPOSE 5000
+    EXPOSE 5000
 
-CMD ["python", "app.py"]
-```
+    CMD ["python", "app.py"]
 
 The Docker image contains:
 
-* Python 3.12 runtime
-* Flask dependency
-* Application source code
-* Application startup command
+- Python 3.12 runtime
+- Flask dependency
+- Application source code
+- Application startup command
 
 ### Container Security
 
 The application runs as a non-root user:
 
-```dockerfile
-RUN useradd --create-home appuser
-USER appuser
-```
+    RUN useradd --create-home appuser
+    USER appuser
 
 Running the application as a dedicated non-root user reduces unnecessary container privileges.
 
@@ -262,9 +218,7 @@ The pipeline tags each Docker image using the Jenkins build number.
 
 For example:
 
-```text
-khushiiii19/finacplus-cicd:17
-```
+    khushiiii19/finacplus-cicd:17
 
 This provides a unique image version for each pipeline execution.
 
@@ -278,17 +232,15 @@ The application is deployed to Kubernetes using a Deployment and a Service.
 
 The Kubernetes Deployment:
 
-* Runs 2 replicas.
-* Uses the Docker image generated by the pipeline.
-* Exposes container port `5000`.
-* Uses readiness and liveness probes.
-* Supports rolling updates when a new image is deployed.
+- Runs 2 replicas.
+- Uses the Docker image generated by the pipeline.
+- Exposes container port `5000`.
+- Uses readiness and liveness probes.
+- Supports rolling updates when a new image is deployed.
 
 The Deployment is named:
 
-```text
-finacplus-app
-```
+    finacplus-app
 
 ### Service
 
@@ -296,29 +248,21 @@ The application is exposed through a Kubernetes NodePort Service.
 
 The Service is named:
 
-```text
-finacplus-service
-```
+    finacplus-service
 
 The Service configuration uses:
 
-```text
-Port: 5000
-Target Port: 5000
-Node Port: 30080
-```
+    Port: 5000
+    Target Port: 5000
+    Node Port: 30080
 
 The application can be accessed locally through:
 
-```text
-http://localhost:30080
-```
+    http://localhost:30080
 
 The health endpoint can be checked through:
 
-```text
-http://localhost:30080/health
-```
+    http://localhost:30080/health
 
 ---
 
@@ -328,32 +272,28 @@ The CI/CD pipeline is defined in the `Jenkinsfile`.
 
 The pipeline contains the following stages:
 
-```text
-Checkout
-    |
-    v
-Test
-    |
-    v
-Docker Build
-    |
-    v
-Docker Push
-    |
-    v
-Kubernetes Deploy
-    |
-    v
-Deployment Verification
-```
+    Checkout
+        |
+        v
+    Test
+        |
+        v
+    Docker Build
+        |
+        v
+    Docker Push
+        |
+        v
+    Kubernetes Deploy
+        |
+        v
+    Deployment Verification
 
 ### Stage 1 — Checkout
 
 Jenkins checks out the source code from the configured GitHub repository.
 
-```groovy
-checkout scm
-```
+    checkout scm
 
 ---
 
@@ -363,34 +303,26 @@ The pipeline performs application validation before building the Docker image.
 
 First, the Python version is checked:
 
-```bash
-python3 --version
-```
+    python3 --version
 
 Python syntax is validated using:
 
-```bash
-python3 -m py_compile app/app.py
-```
+    python3 -m py_compile app/app.py
 
 The pipeline then installs the test dependencies:
 
-```bash
-python3 -m pip install --user -r requirements-test.txt
-```
+    python3 -m pip install --user -r requirements-test.txt
 
 Automated application tests are executed using:
 
-```bash
-python3 -m pytest tests/ -v
-```
+    python3 -m pytest tests/ -v
 
 The tests validate:
 
-* `/` endpoint response
-* `/health` endpoint response
-* HTTP status codes
-* Expected response bodies
+- `/` endpoint response
+- `/health` endpoint response
+- HTTP status codes
+- Expected response bodies
 
 If any test fails, the pipeline stops and the Docker build and deployment stages are not executed.
 
@@ -402,9 +334,7 @@ A Docker image is built using the current Jenkins build number as the image tag.
 
 Example:
 
-```text
-khushiiii19/finacplus-cicd:17
-```
+    khushiiii19/finacplus-cicd:17
 
 Using the Jenkins build number provides a unique version for each pipeline execution.
 
@@ -426,15 +356,11 @@ The image is then pushed to the configured Docker Hub repository.
 
 The pipeline updates the Kubernetes Deployment with the newly built image using:
 
-```bash
-kubectl set image
-```
+    kubectl set image
 
 The pipeline then waits for the rollout to complete using:
 
-```bash
-kubectl rollout status
-```
+    kubectl rollout status
 
 The rollout has a timeout to prevent the pipeline from waiting indefinitely.
 
@@ -446,8 +372,8 @@ The deployment is only marked as completed after Kubernetes reports that the rol
 
 The pipeline verifies:
 
-* Kubernetes Deployment status
-* Kubernetes Pod status
+- Kubernetes Deployment status
+- Kubernetes Pod status
 
 This provides an additional verification step after deployment.
 
@@ -459,13 +385,13 @@ The Jenkinsfile uses parameters to make the pipeline reusable.
 
 The configurable parameters are:
 
-| Parameter        | Purpose                    |
-| ---------------- | -------------------------- |
-| `IMAGE_REPO`     | Docker image repository    |
+| Parameter | Purpose |
+| --- | --- |
+| `IMAGE_REPO` | Docker image repository |
 | `K8S_DEPLOYMENT` | Kubernetes Deployment name |
-| `K8S_CONTAINER`  | Kubernetes container name  |
-| `K8S_NAMESPACE`  | Kubernetes namespace       |
-| `K8S_CONTEXT`    | Kubernetes context         |
+| `K8S_CONTAINER` | Kubernetes container name |
+| `K8S_NAMESPACE` | Kubernetes namespace |
+| `K8S_CONTEXT` | Kubernetes context |
 
 For the current project, the default values target the local Docker Desktop Kubernetes cluster.
 
@@ -477,9 +403,9 @@ This allows the pipeline structure to be adapted to another application or Kuber
 
 Jenkins is configured as a Docker container with access to:
 
-* Docker
-* Kubernetes
-* The project's Kubernetes kubeconfig
+- Docker
+- Kubernetes
+- The project's Kubernetes kubeconfig
 
 The Jenkins container uses the Docker socket to build and push Docker images.
 
@@ -487,10 +413,8 @@ The Kubernetes kubeconfig is mounted into the Jenkins container as a read-only f
 
 The current Kubernetes configuration uses:
 
-```text
-Kubernetes context: docker-desktop
-Namespace: default
-```
+    Kubernetes context: docker-desktop
+    Namespace: default
 
 ---
 
@@ -500,9 +424,7 @@ Docker Hub authentication is handled using a Jenkins credential.
 
 Credential ID:
 
-```text
-dockerhub-creds
-```
+    dockerhub-creds
 
 The Jenkinsfile accesses the credential using Jenkins' `withCredentials` mechanism.
 
@@ -518,29 +440,25 @@ GitHub is configured to trigger Jenkins automatically when code is pushed to the
 
 The Jenkins job has the following trigger enabled:
 
-```text
-GitHub hook trigger for GITScm polling
-```
+    GitHub hook trigger for GITScm polling
 
 Because Jenkins is running locally, an ngrok tunnel is used to expose the Jenkins webhook endpoint to GitHub during development.
 
 The webhook flow is:
 
-```text
-GitHub Push
-    |
-    v
-GitHub Webhook
-    |
-    v
-ngrok
-    |
-    v
-Jenkins
-    |
-    v
-Pipeline Execution
-```
+    GitHub Push
+        |
+        v
+    GitHub Webhook
+        |
+        v
+    ngrok
+        |
+        v
+    Jenkins
+        |
+        v
+    Pipeline Execution
 
 This removes the need to manually start a Jenkins build after every Git push.
 
@@ -550,48 +468,44 @@ This removes the need to manually start a Jenkins build after every Git push.
 
 When a developer pushes a change:
 
-```text
-git push
-    |
-    v
-GitHub
-    |
-    v
-GitHub Webhook
-    |
-    v
-Jenkins
-    |
-    v
-Checkout
-    |
-    v
-Test
-    |
-    v
-Docker Build
-    |
-    v
-Docker Push
-    |
-    v
-Kubernetes Deployment
-    |
-    v
-Rollout Verification
-```
+    git push
+        |
+        v
+    GitHub
+        |
+        v
+    GitHub Webhook
+        |
+        v
+    Jenkins
+        |
+        v
+    Checkout
+        |
+        v
+    Test
+        |
+        v
+    Docker Build
+        |
+        v
+    Docker Push
+        |
+        v
+    Kubernetes Deployment
+        |
+        v
+    Rollout Verification
 
 If a required stage fails, subsequent stages are not executed.
 
 For example, if automated tests fail:
 
-```text
-Checkout       ✓
-Test           ✗
-Docker Build   Not executed
-Docker Push    Not executed
-Kubernetes     Not executed
-```
+    Checkout       ✓
+    Test           ✗
+    Docker Build   Not executed
+    Docker Push    Not executed
+    Kubernetes     Not executed
 
 ---
 
@@ -603,45 +517,41 @@ The project includes both automated application tests and end-to-end CI/CD valid
 
 The automated pytest suite contains:
 
-| Test               | Expected Result                           |
-| ------------------ | ----------------------------------------- |
-| `/` endpoint       | HTTP 200 and expected application message |
-| `/health` endpoint | HTTP 200 and `healthy` response           |
+| Test | Expected Result |
+| --- | --- |
+| `/` endpoint | HTTP 200 and expected application message |
+| `/health` endpoint | HTTP 200 and `healthy` response |
 
 The tests can be executed locally using:
 
-```bash
-python3 -m pytest tests/ -v
-```
+    python3 -m pytest tests/ -v
 
 A successful local test execution produced:
 
-```text
-tests/test_app.py::test_home PASSED
-tests/test_app.py::test_health PASSED
+    tests/test_app.py::test_home PASSED
+    tests/test_app.py::test_health PASSED
 
-2 passed
-```
+    2 passed
 
 ### CI/CD Validation
 
 The following validation scenarios are covered:
 
-| Test Case                      | Expected Result                         |
-| ------------------------------ | --------------------------------------- |
-| Python syntax validation       | Application compiles successfully       |
-| Automated pytest tests         | All application tests pass              |
-| Docker image build             | Docker image created successfully       |
-| Docker container startup       | Application starts successfully         |
-| Application `/` endpoint       | Returns application message             |
-| Application `/health` endpoint | Returns `healthy`                       |
-| Kubernetes deployment          | 2 replicas become ready                 |
-| Kubernetes service             | Application accessible through NodePort |
-| Docker Hub push                | Image successfully uploaded             |
-| GitHub webhook                 | Jenkins build triggered automatically   |
-| Jenkins pipeline               | All stages complete successfully        |
-| Kubernetes rollout             | New image deployed successfully         |
-| Deployment verification        | Deployment and pods reported healthy    |
+| Test Case | Expected Result |
+| --- | --- |
+| Python syntax validation | Application compiles successfully |
+| Automated pytest tests | All application tests pass |
+| Docker image build | Docker image created successfully |
+| Docker container startup | Application starts successfully |
+| Application `/` endpoint | Returns application message |
+| Application `/health` endpoint | Returns `healthy` |
+| Kubernetes deployment | 2 replicas become ready |
+| Kubernetes service | Application accessible through NodePort |
+| Docker Hub push | Image successfully uploaded |
+| GitHub webhook | Jenkins build triggered automatically |
+| Jenkins pipeline | All stages complete successfully |
+| Kubernetes rollout | New image deployed successfully |
+| Deployment verification | Deployment and pods reported healthy |
 
 ---
 
@@ -649,63 +559,49 @@ The following validation scenarios are covered:
 
 A complete Jenkins pipeline execution successfully performed the following stages:
 
-```text
-Checkout
-    ✓
+    Checkout
+        ✓
 
-Test
-    ✓
+    Test
+        ✓
 
-Docker Build
-    ✓
+    Docker Build
+        ✓
 
-Docker Push
-    ✓
+    Docker Push
+        ✓
 
-Kubernetes Deploy
-    ✓
+    Kubernetes Deploy
+        ✓
 
-Deployment Verification
-    ✓
-```
+    Deployment Verification
+        ✓
 
 The pipeline generates Docker images using the Jenkins build number.
 
 For example:
 
-```text
-khushiiii19/finacplus-cicd:<BUILD_NUMBER>
-```
+    khushiiii19/finacplus-cicd:<BUILD_NUMBER>
 
 The Kubernetes Deployment is updated to the newly generated image and the rollout is verified using:
 
-```bash
-kubectl rollout status deployment/finacplus-app
-```
+    kubectl rollout status deployment/finacplus-app
 
 The application can also be verified using:
 
-```bash
-curl http://localhost:30080/
-```
+    curl http://localhost:30080/
 
 and:
 
-```bash
-curl http://localhost:30080/health
-```
+    curl http://localhost:30080/health
 
 The expected responses are:
 
-```text
-FinacPlus CI/CD Pipeline is working!
-```
+    FinacPlus CI/CD Pipeline is working!
 
 and:
 
-```text
-healthy
-```
+    healthy
 
 ---
 
@@ -713,9 +609,7 @@ healthy
 
 The Jenkinsfile includes explicit shell failure handling:
 
-```bash
-set -e
-```
+    set -e
 
 This causes a shell step to stop when a command fails.
 
@@ -723,9 +617,7 @@ The pipeline also uses Jenkins `post` conditions for successful and failed execu
 
 The Kubernetes deployment stage waits for rollout completion using:
 
-```bash
-kubectl rollout status
-```
+    kubectl rollout status
 
 with a timeout.
 
@@ -737,15 +629,13 @@ The pipeline tracks whether a Kubernetes deployment has started and whether the 
 
 If the Kubernetes deployment starts but the rollout fails, Jenkins attempts to roll back the Deployment:
 
-```bash
-kubectl rollout undo deployment/finacplus-app
-```
+    kubectl rollout undo deployment/finacplus-app
 
 The rollback logic does not run for failures that occur before Kubernetes deployment starts, such as:
 
-* Application test failure
-* Docker build failure
-* Docker push failure
+- Application test failure
+- Docker build failure
+- Docker push failure
 
 This avoids performing an unnecessary Kubernetes rollback when Kubernetes has not been modified by the current pipeline execution.
 
@@ -755,13 +645,13 @@ This avoids performing an unnecessary Kubernetes rollback when Kubernetes has no
 
 The following security practices are implemented:
 
-* Docker Hub credentials are stored in Jenkins Credentials.
-* Docker credentials are not hardcoded in the Jenkinsfile.
-* Kubernetes kubeconfig is mounted into Jenkins as read-only.
-* Sensitive local files such as `.env` are excluded using `.gitignore`.
-* Docker Hub authentication uses a Personal Access Token instead of a password.
-* The application container runs as a non-root user using `appuser`.
-* The Docker image uses the `python:3.12-slim` base image.
+- Docker Hub credentials are stored in Jenkins Credentials.
+- Docker credentials are not hardcoded in the Jenkinsfile.
+- Kubernetes kubeconfig is mounted into Jenkins as read-only.
+- Sensitive local files such as `.env` are excluded using `.gitignore`.
+- Docker Hub authentication uses a Personal Access Token instead of a password.
+- The application container runs as a non-root user using `appuser`.
+- The Docker image uses the `python:3.12-slim` base image.
 
 ### Production Considerations
 
@@ -769,16 +659,16 @@ The current implementation is designed for a local assignment environment.
 
 For a production implementation, additional security controls should be considered:
 
-* Use a dedicated Jenkins service account.
-* Apply least-privilege RBAC permissions to Kubernetes.
-* Avoid running Jenkins as root where possible.
-* Avoid exposing the Docker socket directly to Jenkins where possible.
-* Use secure secret-management solutions.
-* Use HTTPS/TLS for external webhook endpoints.
-* Use appropriately scoped credentials.
-* Regularly rotate credentials and access tokens.
-* Use separate Kubernetes namespaces or clusters for different environments.
-* Scan container images for vulnerabilities before deployment.
+- Use a dedicated Jenkins service account.
+- Apply least-privilege RBAC permissions to Kubernetes.
+- Avoid running Jenkins as root where possible.
+- Avoid exposing the Docker socket directly to Jenkins where possible.
+- Use secure secret-management solutions.
+- Use HTTPS/TLS for external webhook endpoints.
+- Use appropriately scoped credentials.
+- Regularly rotate credentials and access tokens.
+- Use separate Kubernetes namespaces or clusters for different environments.
+- Scan container images for vulnerabilities before deployment.
 
 ---
 
@@ -788,28 +678,26 @@ The pipeline is designed to support different applications and Kubernetes enviro
 
 Instead of hardcoding application-specific deployment values throughout the pipeline, the Jenkinsfile uses parameters such as:
 
-```text
-IMAGE_REPO
-K8S_DEPLOYMENT
-K8S_CONTAINER
-K8S_NAMESPACE
-K8S_CONTEXT
-```
+    IMAGE_REPO
+    K8S_DEPLOYMENT
+    K8S_CONTAINER
+    K8S_NAMESPACE
+    K8S_CONTEXT
 
-This allows the same pipeline structure to be reused for:
+This allows the pipeline structure to be reused for:
 
-* Different Docker repositories
-* Different Kubernetes Deployments
-* Different namespaces
-* Different Kubernetes contexts
+- Different Docker repositories
+- Different Kubernetes Deployments
+- Different namespaces
+- Different Kubernetes contexts
 
 For larger environments, this approach could be extended using:
 
-* Jenkins Shared Libraries
-* Environment-specific configuration
-* Separate credentials
-* Dedicated Kubernetes namespaces
-* Separate development, staging, and production environments
+- Jenkins Shared Libraries
+- Environment-specific configuration
+- Separate credentials
+- Dedicated Kubernetes namespaces
+- Separate development, staging, and production environments
 
 ---
 
@@ -819,21 +707,21 @@ The current assignment focuses on CI/CD automation and deployment verification.
 
 For a production environment, monitoring and logging could be extended using tools such as:
 
-* Prometheus for metrics collection
-* Grafana for dashboards
-* Loki or an ELK-based stack for centralized logs
-* Kubernetes events and container logs for troubleshooting
-* Jenkins build history and console logs for CI/CD monitoring
+- Prometheus for metrics collection
+- Grafana for dashboards
+- Loki or an ELK-based stack for centralized logs
+- Kubernetes events and container logs for troubleshooting
+- Jenkins build history and console logs for CI/CD monitoring
 
 Useful metrics to monitor would include:
 
-* Pipeline success/failure rate
-* Pipeline execution duration
-* Deployment rollout failures
-* Pod restarts
-* Application health
-* CPU and memory utilization
-* Container restart frequency
+- Pipeline success/failure rate
+- Pipeline execution duration
+- Deployment rollout failures
+- Pod restarts
+- Application health
+- CPU and memory utilization
+- Container restart frequency
 
 ---
 
@@ -843,12 +731,10 @@ Useful metrics to monitor would include:
 
 Check:
 
-```text
-GitHub webhook configuration
-Jenkins webhook trigger
-GitHub webhook delivery status
-ngrok tunnel status
-```
+    GitHub webhook configuration
+    Jenkins webhook trigger
+    GitHub webhook delivery status
+    ngrok tunnel status
 
 For the local Jenkins environment, the ngrok tunnel must remain active.
 
@@ -858,10 +744,8 @@ For the local Jenkins environment, the ngrok tunnel must remain active.
 
 Check:
 
-```bash
-docker version
-docker images
-```
+    docker version
+    docker images
 
 Also verify that Jenkins has access to the Docker daemon.
 
@@ -871,11 +755,11 @@ Also verify that Jenkins has access to the Docker daemon.
 
 Check:
 
-* Docker Hub username
-* Jenkins credential ID
-* Docker Hub Personal Access Token
-* Token permissions
-* Docker repository name
+- Docker Hub username
+- Jenkins credential ID
+- Docker Hub Personal Access Token
+- Token permissions
+- Docker repository name
 
 ---
 
@@ -883,16 +767,14 @@ Check:
 
 Run the tests locally:
 
-```bash
-python3 -m pytest tests/ -v
-```
+    python3 -m pytest tests/ -v
 
 Check:
 
-* Flask application code
-* Test expectations
-* Python version
-* Test dependencies in `requirements-test.txt`
+- Flask application code
+- Test expectations
+- Python version
+- Test dependencies in `requirements-test.txt`
 
 ---
 
@@ -900,17 +782,13 @@ Check:
 
 Check:
 
-```bash
-kubectl get deployments
-kubectl get pods
-kubectl describe deployment finacplus-app
-```
+    kubectl get deployments
+    kubectl get pods
+    kubectl describe deployment finacplus-app
 
 Also verify the Kubernetes context:
 
-```bash
-kubectl config current-context
-```
+    kubectl config current-context
 
 ---
 
@@ -918,19 +796,17 @@ kubectl config current-context
 
 Check:
 
-```bash
-kubectl get pods
-kubectl describe pod <pod-name>
-kubectl logs <pod-name>
-```
+    kubectl get pods
+    kubectl describe pod <pod-name>
+    kubectl logs <pod-name>
 
 Common causes include:
 
-* Incorrect image name
-* Image pull failure
-* Application startup failure
-* Incorrect port configuration
-* Failed health probes
+- Incorrect image name
+- Image pull failure
+- Application startup failure
+- Incorrect port configuration
+- Failed health probes
 
 ---
 
@@ -940,23 +816,17 @@ Kubernetes maintains rollout history for Deployments.
 
 To view rollout history:
 
-```bash
-kubectl rollout history deployment/finacplus-app
-```
+    kubectl rollout history deployment/finacplus-app
 
 The Jenkins pipeline also attempts an automatic rollback when a Kubernetes deployment has started but the rollout does not complete successfully.
 
 For a manual rollback, use:
 
-```bash
-kubectl rollout undo deployment/finacplus-app
-```
+    kubectl rollout undo deployment/finacplus-app
 
 The rollout status can then be checked using:
 
-```bash
-kubectl rollout status deployment/finacplus-app
-```
+    kubectl rollout status deployment/finacplus-app
 
 ---
 
@@ -964,63 +834,43 @@ kubectl rollout status deployment/finacplus-app
 
 ### Check Kubernetes Nodes
 
-```bash
-kubectl get nodes
-```
+    kubectl get nodes
 
 ### Check Pods
 
-```bash
-kubectl get pods
-```
+    kubectl get pods
 
 ### Check Deployment
 
-```bash
-kubectl get deployment
-```
+    kubectl get deployment
 
 ### Check Service
 
-```bash
-kubectl get service
-```
+    kubectl get service
 
 ### Check Application
 
-```bash
-curl http://localhost:30080/
-```
+    curl http://localhost:30080/
 
 ### Check Health
 
-```bash
-curl http://localhost:30080/health
-```
+    curl http://localhost:30080/health
 
 ### Run Automated Tests
 
-```bash
-python3 -m pytest tests/ -v
-```
+    python3 -m pytest tests/ -v
 
 ### View Application Logs
 
-```bash
-kubectl logs <pod-name>
-```
+    kubectl logs <pod-name>
 
 ### Check Rollout Status
 
-```bash
-kubectl rollout status deployment/finacplus-app
-```
+    kubectl rollout status deployment/finacplus-app
 
 ### View Rollout History
 
-```bash
-kubectl rollout history deployment/finacplus-app
-```
+    kubectl rollout history deployment/finacplus-app
 
 ---
 
@@ -1028,21 +878,15 @@ kubectl rollout history deployment/finacplus-app
 
 To remove the Kubernetes resources:
 
-```bash
-kubectl delete -f k8s/
-```
+    kubectl delete -f k8s/
 
 To remove a locally stored Docker image generated by Jenkins:
 
-```bash
-docker rmi khushiiii19/finacplus-cicd:<BUILD_NUMBER>
-```
+    docker rmi khushiiii19/finacplus-cicd:<BUILD_NUMBER>
 
 For example:
 
-```bash
-docker rmi khushiiii19/finacplus-cicd:17
-```
+    docker rmi khushiiii19/finacplus-cicd:17
 
 Docker Hub images can be managed separately through the Docker Hub repository.
 
