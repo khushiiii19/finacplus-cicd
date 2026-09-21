@@ -82,14 +82,14 @@ pipeline {
                 echo 'Running application validation and automated tests...'
 
                 /*
-                 * Jenkins itself runs inside Docker and uses the
-                 * host Docker daemon through the Docker socket.
+                 * Jenkins is running inside Docker and uses the
+                 * Docker socket to communicate with the Docker daemon.
                  *
-                 * The Jenkins home directory is stored in the
-                 * named Docker volume "jenkins_home".
+                 * The Jenkins workspace is stored inside the
+                 * jenkins_home Docker volume.
                  *
-                 * Mounting that same volume allows the temporary
-                 * Python container to access the Jenkins workspace.
+                 * The temporary Python container mounts that same
+                 * volume so it can access the checked-out source code.
                  */
                 sh '''
                     set -e
@@ -113,7 +113,7 @@ pipeline {
                             python -m py_compile app/app.py
 
                             echo "Running automated tests..."
-                            pytest tests/ -v
+                            PYTHONPATH=/jenkins_home/workspace/finacplus-cicd pytest tests/ -v
                         '
                 '''
             }
@@ -165,6 +165,10 @@ pipeline {
             steps {
                 echo "Deploying ${params.IMAGE_REPO}:${BUILD_NUMBER} to Kubernetes..."
 
+                /*
+                 * Mark deployment as started before modifying
+                 * the Kubernetes Deployment.
+                 */
                 script {
                     env.DEPLOYMENT_STARTED = 'true'
                 }
@@ -183,6 +187,10 @@ pipeline {
                         --timeout=120s
                 '''
 
+                /*
+                 * Mark the deployment complete only after
+                 * Kubernetes reports a successful rollout.
+                 */
                 script {
                     env.DEPLOYMENT_COMPLETED = 'true'
                 }
@@ -236,6 +244,9 @@ pipeline {
                 /*
                  * Roll back only when Kubernetes deployment
                  * actually started but did not complete.
+                 *
+                 * Test, build, and push failures do not trigger
+                 * a Kubernetes rollback.
                  */
                 if (env.DEPLOYMENT_STARTED == 'true' &&
                     env.DEPLOYMENT_COMPLETED != 'true') {
